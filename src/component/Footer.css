@@ -1,0 +1,9 @@
+.Footer {
+    background-color: rgb(162, 228, 253);
+    padding: 1rem;
+    margin: 1rem;
+}
+
+.Footer h1 {
+    color: rgb(192, 86, 196);
+}
