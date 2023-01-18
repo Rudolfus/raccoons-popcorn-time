@@ -1,0 +1,8 @@
+.recom {
+    background-color: rgb(8, 97, 8);
+    color: #fff;
+    border-radius: 4px;
+    width: inline-block;
+    cursor: pointer;
+    box-shadow: 5px 5px 15px 0px;
+}

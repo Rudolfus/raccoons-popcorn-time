@@ -1,19 +1,15 @@
-import { useState } from "react";
 import "./Main.css";
-import moviesFromJson from "../data/movies.json";
 
-const Main = () => {
-  const [moviesArr, setMoviesArr] = useState(moviesFromJson);
+import { Movie } from "./Movie";
 
-  const deleteMovie = (idOfTheMovieToDelete) => {
-    const newListOfMovies = moviesArr.filter((movie) => {
-      // whenever I am deleting a movie, that movie equals to the particular id, so that it won't show up in the new array
-      return movie.id !== idOfTheMovieToDelete;
-    });
-
-    setMoviesArr(newListOfMovies);
-  };
-
+const Main = ({
+  moviesArr,
+  sortMovies,
+  setMoviesArr,
+  sortByDeRating,
+  sortByARating,
+  isAscending,
+}) => {
   // Conditional Rendering with "Element Variables"
   let titleMessage;
   if (moviesArr.length > 0) {
@@ -30,34 +26,24 @@ const Main = () => {
     <div className="Main">
       {titleMessage}
 
+      <button onClick={sortByDeRating}>Sort by descending rating</button>
+      <button onClick={sortByARating}>Sort by ascending rating</button>
+      <button onClick={sortMovies}>
+        Sort movies {isAscending ? "ascending" : "descending"}
+      </button>
+
       {moviesArr.map((movieDetails) => {
+        // whenever I am mapping, include a key with a unique id
+        // for each movie in the array, display the component Movie
         return (
-          <div key={movieDetails.id} className="Main card badge">
-            <p>{movieDetails.title}</p>
-            <p>{movieDetails.year}</p>
-            <p>{movieDetails.genres}</p>
-
-            {/* conditional rendering  */}
-            {movieDetails.imgURL ? (
-              <img src={movieDetails.imgURL} alt="" />
-            ) : (
-              <img
-                src="https://via.placeholder.com/182x268"
-                alt="placeholder"
-              />
-            )}
-
-            {/* If the rating is above 8, the movie will say RECOMMENDED */}
-            {movieDetails.rating > 8 && <p>RECOMMENDED</p>}
-            <hr />
-            <button
-              onClick={() => {
-                deleteMovie(movieDetails.id);
-              }}
-            >
-              Delete this movie
-            </button>
-          </div>
+          <Movie
+            key={movieDetails.id}
+            movieDetails={movieDetails}
+            // to be able to use the delete button, we pass the useState function through this prop
+            // to the component Movie
+            setMoviesArr={setMoviesArr}
+            moviesArr={moviesArr}
+          />
         );
       })}
     </div>
